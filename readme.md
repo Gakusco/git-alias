@@ -27,7 +27,7 @@ These scripts allow you to manage Git aliases on your system using Windows batch
 1. Open a terminal and navigate to the directory containing `git_aliases.sh`.
 2. Make the script executable, if necessary:
    ```bash
-   chmod +x git_aliases.sh´´´
+   chmod +x git_aliases.sh
 3. Run the script:
 4. Follow the on-screen menu to select an option:
     - Option 1: Add aliases
