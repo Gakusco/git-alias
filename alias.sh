@@ -1,33 +1,38 @@
 #!/bin/bash
 
-# Función para agregar los alias
 add_aliases() {
-    git config --global alias.lo "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --branches"
-    git config --global alias.s "status -s"
-    git config --global alias.alias "config --get-regexp ^alias\\."
-    git config --global alias.c "checkout"
+    # Read aliases from custom_aliases.txt and configure them
+    while IFS= read -r line
+    do
+        alias_key=$(echo "$line" | cut -d'=' -f1)
+        alias_value=$(echo "$line" | cut -d'=' -f2)
+        git config --global "alias.$alias_key" "$alias_value"
+    done < custom_aliases.txt
 
-    echo "¡Alias agregados con éxito!"
+    echo "Aliases added successfully!"
+    read -n 1 -s -r -p "Press any key to continue..."
 }
 
-# Función para limpiar los alias
 clean_aliases() {
-    git config --global --unset alias.lo
-    git config --global --unset alias.s
-    git config --global --unset alias.alias
-    git config --global --unset alias.c
+    # Remove all aliases
+    while IFS= read -r line
+    do
+        alias_key=$(echo "$line" | cut -d'=' -f1)
+        git config --global --unset "alias.$alias_key"
+    done < custom_aliases.txt
 
-    echo "¡Todos los alias han sido eliminados!"
+    echo "All aliases have been removed!"
+    read -n 1 -s -r -p "Press any key to continue..."
 }
 
-# Menú principal
-while true; do
-    echo "Seleccione una opción:"
-    echo "1. Agregar alias"
-    echo "2. Limpiar todos los alias"
-    echo "3. Salir"
-
-    read -p "Opción: " choice
+while :
+do
+    clear
+    echo "Select an option:"
+    echo "1. Add aliases"
+    echo "2. Clean all aliases"
+    echo "3. Exit"
+    read choice
 
     case $choice in
         1)
@@ -37,11 +42,12 @@ while true; do
             clean_aliases
             ;;
         3)
-            echo "Saliendo del script."
+            echo "Exiting the script."
             exit
             ;;
         *)
-            echo "Opción no válida. Inténtalo de nuevo."
+            echo "Invalid option. Try again."
+            read -n 1 -s -r -p "Press any key to continue..."
             ;;
     esac
 done

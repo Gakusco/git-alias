@@ -1,0 +1,4 @@
+lo=log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)^<%an>%^Creset' --abbrev-commit --date=relative --branches
+s=status -s
+alias=config --get-regexp ^alias\.
+c=checkout
