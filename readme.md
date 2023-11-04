@@ -1,1 +1,1 @@
-#Script alias git
+# Script alias git
